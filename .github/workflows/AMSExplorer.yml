@@ -21,7 +21,7 @@ jobs:
       uses: nuget/setup-nuget@v1
     - name: nuget restore
       shell: cmd
-      run: nuget restore "%SLN_PATH%"
+      run: nuget restore AMSExplorer\AMSExplorer.csproj
     - name: devenv setup
       shell: cmd
       run: |
@@ -54,7 +54,7 @@ jobs:
       uses: nuget/setup-nuget@v1
     - name: nuget restore
       shell: cmd
-      run: nuget restore "%SLN_PATH%"
+      run: nuget restore AMSExplorer\AMSExplorer.csproj
     - name: devenv setup
       shell: cmd
       run: |
