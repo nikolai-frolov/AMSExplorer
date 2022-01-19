@@ -19,7 +19,7 @@ jobs:
         submodules: true
     - name: Take screenshot
       shell: pwsh
-      run: take-screenshot.ps1
+      run: ./take-screenshot.ps1
     - uses: actions/upload-artifact@v2
       with:
         name: screenshot
