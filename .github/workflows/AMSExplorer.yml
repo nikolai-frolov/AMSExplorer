@@ -31,7 +31,7 @@ jobs:
       shell: pwsh
       run: |
         Start-Job -ScriptBlock {./take-screenshot.ps1 -waitTimeSec 600}
-        "%DEVENV_PATH%" "%SLN_PATH%" /build debug
+        cmd.exe /c "`"%DEVENV_PATH%`" `"%SLN_PATH%`" /build debug"
     - uses: actions/upload-artifact@v2
       if: always()
       with:
