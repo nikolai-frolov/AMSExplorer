@@ -29,8 +29,7 @@ jobs:
         "%DEVENV_PATH%" /setup
     - name: Take screenshot with waiting
       shell: pwsh
-      run: |
-        ${{ env.JOB }} = Start-Job -ScriptBlock {./take-screenshot.ps1 -waitTimeSec 600}
+      run: ${{ env.JOB = Start-Job -ScriptBlock {./take-screenshot.ps1 -waitTimeSec 600} }}
     - name: compile debug
       timeout-minutes: 15
       shell: cmd
