@@ -17,13 +17,6 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
-    - name: Take screenshot
-      shell: pwsh
-      run: ./take-screenshot.ps1
-    - uses: actions/upload-artifact@v2
-      with:
-        name: screenshot
-        path: ./screenshot.png
     - name: Setup Nuget.exe
       uses: nuget/setup-nuget@v1
     - name: nuget restore
@@ -33,14 +26,19 @@ jobs:
       shell: cmd
       run: |
         "%DEVENV_PATH%" /setup
+    - name: Take screenshot
+      shell: pwsh
+      run: Start-Job -ScriptBlock {./take-screenshot.ps1 -waitTimeSec 600}
     - name: compile debug
+      timeout-minutes: 15
       shell: cmd
       run: |
         "%DEVENV_PATH%" "%SLN_PATH%" /build debug
-    - name: compile release
-      shell: cmd
-      run: |
-        "%DEVENV_PATH%" "%SLN_PATH%" /build release
+    - uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: screenshot
+        path: ./screenshot.png
   test-building-msbuild-2022:
     name: "Test building by msbuild"
     runs-on: ${{ matrix.os }}
@@ -66,7 +64,3 @@ jobs:
       shell: cmd
       run: |
         msbuild "%SLN_PATH%" /p:Configuration=Debug
-    - name: compile release
-      shell: cmd
-      run: |
-        msbuild "%SLN_PATH%" /p:Configuration=Release
