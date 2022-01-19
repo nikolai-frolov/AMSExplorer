@@ -10,7 +10,6 @@ jobs:
     env:
       DEVENV_PATH: C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.com
       SLN_PATH: AMSExplorer.sln
-      JOB: null
     strategy:
       matrix:
         os: [windows-2022]
@@ -29,16 +28,12 @@ jobs:
         "%DEVENV_PATH%" /setup
     - name: Take screenshot with waiting
       shell: pwsh
-      run: ${{ env.JOB = Start-Job -ScriptBlock {./take-screenshot.ps1 -waitTimeSec 600} }}
+      run: Start-Job -ScriptBlock {./take-screenshot.ps1 -waitTimeSec 600}
     - name: compile debug
       timeout-minutes: 15
       shell: cmd
       run: |
         "%DEVENV_PATH%" "%SLN_PATH%" /build debug
-    - name: Get result of screenshot job
-      if: always()
-      shell: pwsh
-      run: Receive-Job -Job ${{ env.JOB }}
     - uses: actions/upload-artifact@v2
       if: always()
       with:
