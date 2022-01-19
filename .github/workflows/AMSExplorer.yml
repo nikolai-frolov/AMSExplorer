@@ -26,13 +26,11 @@ jobs:
       shell: cmd
       run: |
         "%DEVENV_PATH%" /setup
-    - name: Take screenshot with waiting
-      shell: pwsh
-      run: Start-Job -ScriptBlock {./take-screenshot.ps1 -waitTimeSec 600}
-    - name: compile debug
+    - name: compile debug 
       timeout-minutes: 15
-      shell: cmd
+      shell: pwsh
       run: |
+        Start-Job -ScriptBlock {./take-screenshot.ps1 -waitTimeSec 600}
         "%DEVENV_PATH%" "%SLN_PATH%" /build debug
     - uses: actions/upload-artifact@v2
       if: always()
