@@ -23,7 +23,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: screenshot
-        path: path/to/artifact/world.txt
+        path: ./screenshot.png
     - name: Setup Nuget.exe
       uses: nuget/setup-nuget@v1
     - name: nuget restore
